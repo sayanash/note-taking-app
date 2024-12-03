@@ -106,6 +106,8 @@ class NotesDatabaseHelper(context: Context) :
         }
         return db.update(TABLE_NAME, values, "$COLUMN_ID=?", arrayOf(id.toString()))
     }
+
+
     fun deleteNote(id: Long): Boolean {
         val db = writableDatabase
         val result = db.delete("Notes", "id=?", arrayOf(id.toString()))

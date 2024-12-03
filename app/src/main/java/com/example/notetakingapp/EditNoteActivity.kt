@@ -18,50 +18,45 @@ class EditNoteActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         dbHelper = NotesDatabaseHelper(this)
+        noteId = intent.getLongExtra("noteId", -1L).takeIf { it != -1L }
 
-        // Get noteId if it's for editing
-        noteId = intent.getLongExtra("noteId", -1)
-
-        // If editing an existing note, load its details
-        if (noteId != -1L) {
-            val note = dbHelper.getNoteById(noteId!!)
-            binding.editTextTitle.setText(note?.title)
-            binding.editTextContent.setText(note?.content)
+        // Load the existing note if available
+        noteId?.let {
+            val note = dbHelper.getNoteById(it)
+            if (note != null) {
+                binding.editTextTitle.setText(note.title)
+                binding.editTextContent.setText(note.content)
+            }
         }
 
-        // Auto-save when text changes in either field
-        binding.editTextTitle.addTextChangedListener(object : TextWatcher {
+        // Automatically save the note when the content changes
+        val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 saveNote()
             }
-
             override fun afterTextChanged(s: Editable?) {}
-        })
+        }
 
-        binding.editTextContent.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                saveNote()
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        binding.editTextTitle.addTextChangedListener(textWatcher)
+        binding.editTextContent.addTextChangedListener(textWatcher)
     }
 
     private fun saveNote() {
         val title = binding.editTextTitle.text.toString()
         val content = binding.editTextContent.text.toString()
 
-        // Save or update the note in the database
-        if (noteId == -1L) {
-            // New note
-            dbHelper.insertNote(title, content)
-        } else {
-            // Existing note, update it
+        if (noteId != null) {
+            // Update existing note
             dbHelper.updateNote(noteId!!, title, content)
+        } else if (title.isNotBlank() || content.isNotBlank()) {
+            // Insert a new note only if one doesn't exist and fields are not empty
+            noteId = dbHelper.insertNote(title, content)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        saveNote() // Ensure note is saved when exiting
     }
 }
