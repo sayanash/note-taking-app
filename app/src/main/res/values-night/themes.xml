@@ -7,5 +7,11 @@
 
         <!-- Background color -->
         <item name="android:windowBackground">@color/background_dark</item>
+
+        <item name="colorSurface">#121212</item>
+        <item name="colorOnSurface">#FFFFFF</item>
+        <item name="colorOnSurfaceVariant">#B0B0B0</item>
+        <item name="colorError">#CF6679</item>
+        <item name="colorOnError">#000000</item>
     </style>
 </resources>

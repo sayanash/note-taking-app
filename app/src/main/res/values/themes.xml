@@ -7,5 +7,11 @@
 
         <!-- Background color -->
         <item name="android:windowBackground">@color/background_light</item>
+
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#212121</item>
+        <item name="colorOnSurfaceVariant">#757575</item>
+        <item name="colorError">#F44336</item>
+        <item name="colorOnError">#FFFFFF</item>
     </style>
 </resources>
