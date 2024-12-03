@@ -63,6 +63,41 @@ class NotesDatabaseHelper(context: Context) :
         }
         return notesList
     }
+    // Get a single note by ID
+    fun getNoteById(id: Long): Note? {
+        val db = readableDatabase
+        val cursor = db.query(
+            "Notes", // The table name
+            arrayOf("id", "title", "content", "timestamp"), // Columns to fetch
+            "id = ?", // WHERE clause
+            arrayOf(id.toString()), // Selection arguments
+            null, // Group by
+            null, // Having
+            null // Order by
+        )
+
+        var note: Note? = null
+        if (cursor != null && cursor.moveToFirst()) {
+            val noteIdColumnIndex = cursor.getColumnIndex("id")
+            val titleColumnIndex = cursor.getColumnIndex("title")
+            val contentColumnIndex = cursor.getColumnIndex("content")
+            val timestampColumnIndex = cursor.getColumnIndex("timestamp")
+
+            // Check if all columns exist and are valid (>= 0)
+            if (noteIdColumnIndex >= 0 && titleColumnIndex >= 0 && contentColumnIndex >= 0 && timestampColumnIndex >= 0) {
+                val noteId = cursor.getLong(noteIdColumnIndex)
+                val title = cursor.getString(titleColumnIndex)
+                val content = cursor.getString(contentColumnIndex)
+                val timestamp = cursor.getString(timestampColumnIndex)
+
+                note = Note(noteId, title, content, timestamp)
+            }
+        }
+        cursor?.close()
+        db.close()
+        return note
+    }
+
     fun updateNote(id: Long, title: String, content: String): Int {
         val db = writableDatabase
         val values = ContentValues().apply {
