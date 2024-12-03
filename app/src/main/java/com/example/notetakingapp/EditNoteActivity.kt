@@ -1,7 +1,8 @@
 package com.example.notetakingapp
 
 import android.os.Bundle
-import android.widget.Toast
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notetakingapp.databinding.ActivityEditNoteBinding
 
@@ -18,39 +19,49 @@ class EditNoteActivity : AppCompatActivity() {
 
         dbHelper = NotesDatabaseHelper(this)
 
-        noteId = intent.getLongExtra("noteId", -1L).takeIf { it != -1L }
-        if (noteId != null) {
-            loadNote()
+        // Get noteId if it's for editing
+        noteId = intent.getLongExtra("noteId", -1)
+
+        // If editing an existing note, load its details
+        if (noteId != -1L) {
+            val note = dbHelper.getNoteById(noteId!!)
+            binding.editTextTitle.setText(note?.title)
+            binding.editTextContent.setText(note?.content)
         }
 
-        binding.buttonSave.setOnClickListener {
-            saveNote()
-        }
-    }
+        // Auto-save when text changes in either field
+        binding.editTextTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-    private fun loadNote() {
-        val notes = dbHelper.getAllNotes()
-        val note = notes.find { it.id == noteId }
-        note?.let {
-            binding.editTextTitle.setText(it.title)
-            binding.editTextContent.setText(it.content)
-        }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                saveNote()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        binding.editTextContent.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                saveNote()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     private fun saveNote() {
         val title = binding.editTextTitle.text.toString()
         val content = binding.editTextContent.text.toString()
 
-        if (title.isBlank() || content.isBlank()) {
-            Toast.makeText(this, "Please enter a title and content", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        if (noteId == null) {
+        // Save or update the note in the database
+        if (noteId == -1L) {
+            // New note
             dbHelper.insertNote(title, content)
         } else {
+            // Existing note, update it
             dbHelper.updateNote(noteId!!, title, content)
         }
-        finish()
     }
 }
