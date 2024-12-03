@@ -1,0 +1,42 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditNoteActivity">
+
+    <EditText
+        android:id="@+id/editTextTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+    <EditText
+        android:id="@+id/editTextContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:hint="Write your note here..."
+        android:gravity="top"
+        app:layout_constraintTop_toBottomOf="@id/editTextTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonSave"
+        android:layout_margin="16dp" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
