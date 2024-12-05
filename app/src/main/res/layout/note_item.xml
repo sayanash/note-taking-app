@@ -7,7 +7,9 @@
     app:cardCornerRadius="12dp"
     app:cardElevation="6dp"
     app:cardBackgroundColor="?attr/colorSurface"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:clickable="true"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,6 +17,7 @@
         android:orientation="vertical"
         android:padding="8dp">
 
+        <!-- Title or Add New Note Placeholder -->
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
@@ -25,8 +28,10 @@
             android:fontFamily="sans-serif-medium"
             android:ellipsize="end"
             android:maxLines="1"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:text="Note Title or Add New Note" />
 
+        <!-- Timestamp for Notes -->
         <TextView
             android:id="@+id/textViewTimestamp"
             android:layout_width="match_parent"
@@ -34,7 +39,9 @@
             android:textSize="14sp"
             android:textColor="?attr/colorOnSurfaceVariant"
             android:fontFamily="sans-serif"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:text="Date/Time Here"
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,6 +49,7 @@
             android:orientation="horizontal"
             android:gravity="end">
 
+            <!-- Delete Button (Visibility will be handled in Adapter) -->
             <Button
                 android:id="@+id/btnDelete"
                 android:layout_width="wrap_content"
@@ -51,7 +59,9 @@
                 android:textColor="?attr/colorOnError"
                 android:elevation="4dp"
                 android:layout_marginEnd="8dp"
+                android:visibility="visible"
                 style="?attr/materialButtonOutlinedStyle" />
+
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

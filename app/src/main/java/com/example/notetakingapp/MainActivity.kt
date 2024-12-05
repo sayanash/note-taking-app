@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.notetakingapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -33,21 +33,16 @@ class MainActivity : AppCompatActivity() {
         // Initialize the database helper
         dbHelper = NotesDatabaseHelper(this)
 
-        // Initialize the adapter
+        // Initialize the adapter with an empty list initially
         notesAdapter = NotesAdapter(dbHelper.getAllNotes().toMutableList(), dbHelper)
 
-        // Set up RecyclerView
-        binding.recyclerViewNotes.layoutManager = LinearLayoutManager(this)
+        // Set up RecyclerView with GridLayoutManager (2 columns)
+        binding.recyclerViewNotes.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerViewNotes.adapter = notesAdapter
 
         // Set the theme switch listener
         binding.themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             toggleTheme(isChecked)
-        }
-
-        // Add note with FAB
-        binding.fabAddNote.setOnClickListener {
-            startActivity(Intent(this, EditNoteActivity::class.java))
         }
     }
 
