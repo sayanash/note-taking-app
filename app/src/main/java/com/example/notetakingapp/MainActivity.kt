@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dbHelper: NotesDatabaseHelper
     private lateinit var notesAdapter: NotesAdapter
     private lateinit var sharedPreferences: SharedPreferences
+    private var allNotes: MutableList<Note> = mutableListOf() // Store all notes for filtering
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +33,10 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize the database helper
         dbHelper = NotesDatabaseHelper(this)
+        allNotes = dbHelper.getAllNotes().toMutableList() // Fetch all notes
 
-        // Initialize the adapter with an empty list initially
-        notesAdapter = NotesAdapter(dbHelper.getAllNotes().toMutableList(), dbHelper)
+        // Initialize the adapter with all notes
+        notesAdapter = NotesAdapter(allNotes, dbHelper)
 
         // Set up RecyclerView with GridLayoutManager (2 columns)
         binding.recyclerViewNotes.layoutManager = GridLayoutManager(this, 2)
@@ -44,6 +46,20 @@ class MainActivity : AppCompatActivity() {
         binding.themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             toggleTheme(isChecked)
         }
+
+
+        // Set up SearchView listener to filter notes
+        binding.searchViewNotes.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                filterNotes(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterNotes(newText)
+                return true
+            }
+        })
     }
 
     private fun toggleTheme(isDarkMode: Boolean) {
@@ -55,7 +71,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Update the notes when returning
-        notesAdapter.updateNotes(dbHelper.getAllNotes().toMutableList())
+        // Refresh the notes list when returning to the activity
+        allNotes = dbHelper.getAllNotes().toMutableList()
+        notesAdapter.updateNotes(allNotes)
+    }
+
+    private fun filterNotes(query: String?) {
+        if (query.isNullOrEmpty()) {
+            notesAdapter.updateNotes(allNotes) // Show all notes if query is empty
+        } else {
+            val filteredNotes = allNotes.filter {
+                it.title.contains(query, ignoreCase = true) ||
+                        it.content.contains(query, ignoreCase = true)
+            }
+            notesAdapter.updateNotes(filteredNotes) // Update with filtered list
+        }
     }
 }

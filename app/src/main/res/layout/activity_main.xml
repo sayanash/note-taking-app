@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- Top Section with App Name and Theme Switch -->
+    <!-- Top Section with App Name, Theme Switch, and Search View -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topSection"
         android:layout_width="0dp"
@@ -20,7 +20,7 @@
             android:id="@+id/textViewAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notely"
+            android:text="SynNote"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,6 +32,18 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchViewNotes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:queryHint="Search notes"
+            app:layout_constraintTop_toBottomOf="@id/textViewAppName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:iconifiedByDefault="false"
+            android:inputType="text" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- RecyclerView for Grid Notes -->
