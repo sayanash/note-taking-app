@@ -1,81 +1,91 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?attr/colorBackground"
     tools:context=".EditNoteActivity">
 
-    <!-- CardView to give the elevated card effect -->
+    <!-- CardView for Note Editing -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardViewNote"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:elevation="8dp"
-        android:padding="16dp"
+        android:layout_weight="1"
+        android:layout_marginVertical="12dp"
         app:cardBackgroundColor="?attr/colorSurface"
-        app:cardCornerRadius="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.5">
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp">
 
-        <!-- Inner LinearLayout to hold the EditTexts -->
+        <!-- Content Container -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-            <!-- Title EditText -->
-            <EditText
-                android:id="@+id/editTextTitle"
+            <!-- Title Input -->
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:hint="Title"
-                android:padding="8dp"
-                android:textColor="?attr/colorOnSurface"
-                android:textColorHint="?attr/colorOnSurface"
-                android:textSize="18sp" />
+                app:hintTextColor="?attr/colorOnSurface"
+                app:boxBackgroundMode="none">
 
-            <!-- Divider Line -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="28sp"
+                    android:padding="8dp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textColorHint="?attr/colorOnSurface" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- Divider -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginVertical="8dp"
                 android:background="?attr/colorOutline" />
-
-            <!-- Content EditText -->
-            <EditText
-                android:id="@+id/editTextContent"
+            <!-- Content Input -->
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:gravity="top|start"
-                android:hint="Write your notes here..."
-                android:inputType="textMultiLine"
-                android:minHeight="200dp"
-                android:padding="8dp"
-                android:textColor="?attr/colorOnSurface"
-                android:textColorHint="?attr/colorOnSurface"
-                android:textSize="16sp" />
+                android:hint="Note's main content..."
+                app:hintTextColor="?attr/colorOnSurface"
+                app:boxBackgroundMode="none">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="543dp"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:minHeight="150dp"
+                    android:padding="8dp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textColorHint="?attr/colorOnSurface"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Share Button -->
-    <Button
+    <!-- Share Button with MaterialButton -->
+
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Share"
-        app:layout_constraintTop_toBottomOf="@id/cardViewNote"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Share this"
+        android:textColor="?attr/colorOnPrimary"
+        android:backgroundTint="?attr/colorSecondary"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_share"
+        app:iconGravity="textStart"
+        app:iconPadding="18dp"
+        android:layout_gravity="center"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

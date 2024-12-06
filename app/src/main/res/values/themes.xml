@@ -1,17 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.Notetakingapp" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.Notetakingapp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary colors -->
-        <item name="colorPrimary">@color/primary_color</item>
-        <item name="colorPrimaryVariant">@color/primary_variant</item>
-        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimary">#6200EE</item>
+        <item name="colorPrimaryVariant">#3700B3</item>
+        <item name="colorSecondary">#03DAC6</item>
 
-        <!-- Background color -->
-        <item name="android:windowBackground">@color/background_light</item>
+        <!-- Background and surface colors -->
+        <item name="colorBackground">#FFFFFF</item>
+        <item name="colorSurface">#F5F5F5</item>
+        <item name="colorOnSurface">#000000</item>
+        <item name="colorOutline">#242424</item>
 
-        <item name="colorSurface">#FFFFFF</item>
-        <item name="colorOnSurface">#212121</item>
-        <item name="colorOnSurfaceVariant">#757575</item>
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
+        <!-- Other attributes -->
+        <item name="android:statusBarColor">#F7C9FF</item>
+
+        <!-- Custom Button Colors -->
+        <item name="deleteButtonColor">#BA2018</item> <!-- Red color for delete button -->
+        <item name="deleteButtonTextColor">#FFFFFF</item> <!-- White text color for delete button -->
+
+        <!-- Search View colors -->
+        <item name="searchViewBackgroundColor">#E0E0E0</item> <!-- Light gray background -->
+        <item name="searchViewTextColor">#000000</item> <!-- Black text -->
     </style>
 </resources>

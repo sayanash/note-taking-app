@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorBackground" format="color" />
+    <attr name="colorSurface" format="color" />
+    <attr name="colorOnSurface" format="color" />
+    <attr name="colorOutline" format="color" />
+
+    <declare-styleable name="DeleteButton">
+        <attr name="deleteButtonColor" format="color"/>
+        <attr name="deleteButtonTextColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="SearchViewCustomAttributes">
+        <attr name="searchViewBackgroundColor" format="color" />
+        <attr name="searchViewTextColor" format="color" />
+    </declare-styleable>
+
+</resources>

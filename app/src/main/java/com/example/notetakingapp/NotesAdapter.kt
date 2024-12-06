@@ -88,6 +88,6 @@ class NotesAdapter(
     fun updateNotes(newNotes: List<Note>) {
         notesList.clear()
         notesList.addAll(newNotes)
-        notifyDataSetChanged()
+        notifyDataSetChanged() // Refresh the RecyclerView after updating notes
     }
 }

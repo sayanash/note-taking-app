@@ -2,6 +2,7 @@ package com.example.notetakingapp
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -43,6 +44,37 @@ class NotesDatabaseHelper(context: Context) :
         }
         return db.insert(TABLE_NAME, null, values)
     }
+
+    fun getNotesSorted(sortType: String): List<Note> {
+        val db = this.readableDatabase
+        val query = when (sortType) {
+            "date_asc" -> "SELECT * FROM Notes ORDER BY timestamp ASC"
+            "date_desc" -> "SELECT * FROM Notes ORDER BY timestamp DESC"
+            "title_asc" -> "SELECT * FROM Notes ORDER BY title COLLATE NOCASE ASC"
+            "title_desc" -> "SELECT * FROM Notes ORDER BY title COLLATE NOCASE DESC"
+            else -> "SELECT * FROM Notes" // Default: no sorting
+        }
+
+        val cursor = db.rawQuery(query, null)
+        val notes = mutableListOf<Note>()
+
+        if (cursor.moveToFirst()) {
+            do {
+                // Extract and map fields to match your Note class
+                val id = cursor.getLong(cursor.getColumnIndexOrThrow("id")) // Long for `id`
+                val title = cursor.getString(cursor.getColumnIndexOrThrow("title")) // String for `title`
+                val content = cursor.getString(cursor.getColumnIndexOrThrow("content")) // String for `content`
+                val timestamp = cursor.getString(cursor.getColumnIndexOrThrow("timestamp")) // String for `timestamp`
+
+                // Create a Note object
+                notes.add(Note(id, title, content, timestamp))
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return notes
+    }
+
 
     fun getAllNotes(): List<Note> {
         val notesList = mutableListOf<Note>()
